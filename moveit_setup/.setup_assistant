@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: annin_ar4_description
+    relative_path: urdf/ar.urdf.xacro
+  srdf:
+    relative_path: config/mk1.srdf
+  package_settings:
+    author_name: todo
+    author_email: todo@todo.com
+    generated_timestamp: 1773382080
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

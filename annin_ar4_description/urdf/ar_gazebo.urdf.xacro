@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="mk1">
+  <xacro:include filename="$(find annin_ar4_description)/urdf/ar.ros2_control.xacro" />
+
+  <xacro:arg name="simulation_controllers" default="" />
+  <xacro:arg name="tf_prefix" default="" />
+  <xacro:arg name="namespace" default="" />
+
+
+
+
+  <xacro:ar_ros2_control
+    ar_model="mk1"
+    plugin_name="gz_ros2_control/GazeboSimSystem"
+
+    robot_parameters_file="$(find annin_ar4_description)/config/mk1.yaml"
+    tf_prefix="$(arg tf_prefix)"
+  />
+
+
+  <gazebo>
+    <plugin filename="libgz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find bringup)/config/ros2_controllers.yaml</parameters>
+      <ros>
+        <namespace>$(arg namespace)</namespace>
+      </ros>
+    </plugin>
+  </gazebo>
+
+
+  <!--<gazebo reference="ee_link">
+    <sensor name="pen_contact" type="contact">
+      <always_on>true</always_on>
+      <update_rate>50</update_rate>
+      <contact>
+        <collision>ee_collision</collision>
+      </contact>
+      <topic>/pen_contact</topic>
+    </sensor>
+  </gazebo> -->
+</robot>
