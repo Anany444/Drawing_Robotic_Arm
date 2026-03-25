@@ -22,3 +22,7 @@ src/
 ├── annin_ar4_description/    # Urdf files, meshes
 └── moveit_setup/             # MoveIt 2 configuration and launch files
 ```
+write detailed struct
+install
+usage
+sys arch
