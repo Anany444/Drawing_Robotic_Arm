@@ -72,8 +72,7 @@ ros2 launch bringup final.launch.py
 cd ~/drawing_arm_ws/src/cv/src
 
 # Run the drawing Python script
-python3 drawing_input.py
-#draw, save with s and quit with q
+python3 drawing_input.py  #draw, save with s and quit with q
 ```
 ### 3.Execute Trajectory
 ```bash
@@ -81,9 +80,7 @@ python3 drawing_input.py
 source ~/drawing_arm_ws/install/setup.bash
 
 # Run MoveIt commander moveit cpp api node
-ros2 run commander commander
-
-#Followed trajectory will be visualised in Rviz
+ros2 run commander commander   #Followed trajectory will be visualised in Rviz
 ```
 
 
