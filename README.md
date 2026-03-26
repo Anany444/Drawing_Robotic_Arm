@@ -5,18 +5,18 @@ An AR4 based Robotic Arm in Gazebo simulation which takes user drawn input image
 
 The system implements a modular pipeline integrating user input, motion planning, control, simulation and visualization:
 
-1. Input Layer (OpenCV)
+### 1. Input Layer (OpenCV)
 - A Python OpenCV script captures 2D mouse strokes.
 - Coordinates are normalized and stored as `(x, y, z)` waypoints in `coords.txt`, where `z` defines the drawing plane height.
 
-2. Planning Layer (MoveIt 2)
+### 2. Planning Layer (MoveIt 2)
 - A C++ node reads waypoints and generates a Cartesian trajectory using the MoveIt2 C++ planning interface .
 
-3. Control & Simulation (ros2_control + Gazebo)
+### 3. Control & Simulation (ros2_control + Gazebo)
 - The trajectory is executed via `ros2_control` joint trajectory controllers.
 - The `gz_ros2_control` plugin interfaces controllers with the Gazebo-simulated AR4 robot.
 
-4. Visualization (RViz)
+### 4. Visualization (RViz)
 - RViz visualizes the drawing using markers for end effector trajectory at the drawing plane height.
 
 
