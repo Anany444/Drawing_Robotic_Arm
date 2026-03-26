@@ -10,6 +10,26 @@ This repository implements a simple drawing pipeline:
 4. The robot model is spawned in Gazebo Sim and controlled using `ros2_control` via gz_ros2_control plugin.
 5. RViz is used for visualizing the end effector tool trajectory at canvas height.
 
+## 🧠 System Architecture
+
+The system implements a modular pipeline integrating user input, motion planning, and simulation using ROS 2 and MoveIt 2.
+
+### 1. Input Layer (Computer Vision)
+- A Python OpenCV node captures 2D mouse strokes.
+- Coordinates are normalized and stored as `(x, y, z)` waypoints in `coords.txt`, where `z` defines the drawing plane.
+
+### 2. Planning Layer (MoveIt 2)
+- A C++ node reads waypoints and generates a Cartesian trajectory using the MoveIt 2 API (`computeCartesianPath`).
+- The trajectory is interpolated and time-parameterized for execution.
+
+### 3. Control & Simulation (ros2_control + Gazebo)
+- The trajectory is executed via `ros2_control` joint controllers.
+- The `gz_ros2_control` plugin interfaces controllers with the Gazebo-simulated AR4 robot.
+
+### 4. Visualization (RViz)
+- RViz displays robot motion and end-effector trajectory for validation.
+
+---
 
 ## Repository Structure
 
