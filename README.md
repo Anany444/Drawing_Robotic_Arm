@@ -16,12 +16,48 @@ This repository implements a simple drawing pipeline:
 ```text
 src/
 ├── bringup/                  # Launch files and runtime configs
-├── commander/                # C++ MoveIt api commander node
-├── cv/                       # Python drawing input utility
+│   ├── launch/
+│   └── config/
+├── commander/                # C++ MoveIt 2 API node
+│   └── src/
+├── cv/                       # OpenCV drawing input tool
+│   └── src/
 ├── description/              # Gazebo world assets
-├── annin_ar4_description/    # Urdf files, meshes
-└── moveit_setup/             # MoveIt 2 configuration and launch files
+│   └── worlds/
+├── annin_ar4_description/    # URDF/Xacro + meshes
+│   ├── urdf/
+│   ├── meshes/
+│   └── config/
+└── moveit_setup/             # MoveIt 2 configuration
+    ├── launch/
+    └── config/
 ```
+
+## Installation
+
+```bash
+# Create workspace
+mkdir -p ~/drawing_arm_ws/src
+cd ~/drawing_arm_ws/src
+
+# Clone repository
+git clone https://github.com/Anany444/Drawing_Robotic_Arm.git
+
+# Move to workspace
+cd ~/drawing_arm_ws
+
+# Install dependencies
+rosdep install --from-paths src --ignore-src -r -y
+
+# Build
+colcon build
+source install/setup.bash
+
+# Install Python dependencies  
+pip install opencv-python numpy
+
+```
+
 write detailed struct
 install
 usage
