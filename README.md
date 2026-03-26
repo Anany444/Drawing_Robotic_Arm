@@ -1,35 +1,25 @@
 # Drawing_Robotic_Arm
 An AR4 based Robotic Arm in gazebo simulation capable of taking drawn input image from user which is used to generate a trajectory using moveit2 c++ api which is followed by the end effector tool and visualised in rviz.
 
-## Overview
-This repository implements a simple drawing pipeline:
+## System Architecture
+```
+The system implements a modular pipeline integrating user input, motion planning, control, simulation and visualization:
 
-1. A Python OpenCV tool captures 2D mouse strokes.
-2. The sampled screen coordinates are normalized and written to a `coords.txt` text file as `(x, y, z)` triplets where z represents canvas height.
-3. A C++ MoveIt api reads those coordinates and generates a Cartesian trajectory through them.
-4. The robot model is spawned in Gazebo Sim and controlled using `ros2_control` via gz_ros2_control plugin.
-5. RViz is used for visualizing the end effector tool trajectory at canvas height.
+1. Input Layer (OpenCV)
+- A Python OpenCV script captures 2D mouse strokes.
+- Coordinates are normalized and stored as `(x, y, z)` waypoints in `coords.txt`, where `z` defines the drawing plane height.
 
-## 🧠 System Architecture
+2. Planning Layer (MoveIt 2)
+- A C++ node reads waypoints and generates a Cartesian trajectory using the MoveIt 2 API.
 
-The system implements a modular pipeline integrating user input, motion planning, and simulation using ROS 2 and MoveIt 2.
+3. Control & Simulation (ros2_control + Gazebo)
+- The trajectory is executed via `ros2_control` joint trajectory controller.
+- The `gz_ros2_control` plugin interfaces controllers with the Gazebo simulated AR4 robot.
 
-### 1. Input Layer (Computer Vision)
-- A Python OpenCV node captures 2D mouse strokes.
-- Coordinates are normalized and stored as `(x, y, z)` waypoints in `coords.txt`, where `z` defines the drawing plane.
+4. Visualization (RViz)
+- RViz visualizes the drawing using markers for end effector trajectory at the drawing plane height.
+```
 
-### 2. Planning Layer (MoveIt 2)
-- A C++ node reads waypoints and generates a Cartesian trajectory using the MoveIt 2 API (`computeCartesianPath`).
-- The trajectory is interpolated and time-parameterized for execution.
-
-### 3. Control & Simulation (ros2_control + Gazebo)
-- The trajectory is executed via `ros2_control` joint controllers.
-- The `gz_ros2_control` plugin interfaces controllers with the Gazebo-simulated AR4 robot.
-
-### 4. Visualization (RViz)
-- RViz displays robot motion and end-effector trajectory for validation.
-
----
 
 ## Repository Structure
 
