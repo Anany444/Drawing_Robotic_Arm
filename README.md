@@ -57,6 +57,36 @@ source install/setup.bash
 pip install opencv-python numpy
 
 ```
+## Usage
+### 1.Launch everything
+```bash
+# Source workspace
+source ~/drawing_arm_ws/install/setup.bash
+
+#Launch full simulation (Gazebo + Rviz + MoveGroup + Controllers)
+ros2 launch bringup final.launch.py
+```
+### 2.Drawing input
+```bash
+# In a new terminal 
+cd ~/drawing_arm_ws/src/cv/src
+
+# Run the drawing Python script
+python3 drawing_input.py
+#draw, save with s and quit with q
+```
+### 3.Execute Trajectory
+```bash
+# In another terminal
+source ~/drawing_arm_ws/install/setup.bash
+
+# Run MoveIt commander moveit cpp api node
+ros2 run commander commander
+
+#Followed trajectory will be visualised in Rviz
+```
+
+
 
 write detailed struct
 install
