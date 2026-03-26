@@ -90,6 +90,7 @@ python3 drawing_input.py  #draw, save with s and quit with q
 ### 3. Execute Trajectory
 ```bash
 # In another terminal
+cd ~/drawing_arm_ws/src/cv/src
 source ~/drawing_arm_ws/install/setup.bash
 
 # Run MoveIt2 commander moveit cpp api node
