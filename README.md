@@ -1,24 +1,24 @@
 # Drawing_Robotic_Arm
-An AR4 based Robotic Arm in gazebo simulation capable of taking drawn input image from user which is used to generate a trajectory using moveit2 c++ api which is followed by the end effector tool and visualised in rviz.
+An AR4 based Robotic Arm in Gazebo simulation which takes user drawn input image and generate a trajectory using MoveIt2 C++ API which is followed by the end effector tool and visualised in Rviz.
 
 ## System Architecture
-```
+
 The system implements a modular pipeline integrating user input, motion planning, control, simulation and visualization:
 
-1. Input Layer (OpenCV)
+### 1. Input Layer (OpenCV)
 - A Python OpenCV script captures 2D mouse strokes.
 - Coordinates are normalized and stored as `(x, y, z)` waypoints in `coords.txt`, where `z` defines the drawing plane height.
 
-2. Planning Layer (MoveIt 2)
-- A C++ node reads waypoints and generates a Cartesian trajectory using the MoveIt 2 API.
+### 2. Planning Layer (MoveIt 2)
+- A C++ node reads waypoints and generates a Cartesian trajectory using the MoveIt2 C++ planning interface .
 
-3. Control & Simulation (ros2_control + Gazebo)
-- The trajectory is executed via `ros2_control` joint trajectory controller.
-- The `gz_ros2_control` plugin interfaces controllers with the Gazebo simulated AR4 robot.
+### 3. Control & Simulation (ros2_control + Gazebo)
+- The trajectory is executed via `ros2_control` joint trajectory controllers.
+- The `gz_ros2_control` plugin interfaces controllers with the Gazebo-simulated AR4 robot.
 
-4. Visualization (RViz)
+### 4. Visualization (RViz)
 - RViz visualizes the drawing using markers for end effector trajectory at the drawing plane height.
-```
+
 
 
 ## Repository Structure
@@ -28,7 +28,7 @@ src/
 ├── bringup/                  # Launch files and runtime configs
 │   ├── launch/
 │   └── config/
-├── commander/                # C++ MoveIt 2 API node
+├── commander/                # C++ MoveIt2 API node
 │   └── src/
 ├── cv/                       # OpenCV drawing input tool
 │   └── src/
@@ -38,7 +38,7 @@ src/
 │   ├── urdf/
 │   ├── meshes/
 │   └── config/
-└── moveit_setup/             # MoveIt 2 configuration
+└── moveit_setup/             # MoveIt2 configuration
     ├── launch/
     └── config/
 ```
@@ -56,6 +56,9 @@ git clone https://github.com/Anany444/Drawing_Robotic_Arm.git
 # Move to workspace
 cd ~/drawing_arm_ws
 
+# Source Ros2
+source /opt/ros/humble/setup.bash
+
 # Install dependencies
 rosdep install --from-paths src --ignore-src -r -y
 
@@ -68,7 +71,7 @@ pip install opencv-python numpy
 
 ```
 ## Usage
-### 1.Launch everything
+### 1. Launch everything
 ```bash
 # Source workspace
 source ~/drawing_arm_ws/install/setup.bash
@@ -76,7 +79,7 @@ source ~/drawing_arm_ws/install/setup.bash
 #Launch full simulation (Gazebo + Rviz + MoveGroup + Controllers)
 ros2 launch bringup final.launch.py
 ```
-### 2.Drawing input
+### 2. Drawing input
 ```bash
 # In a new terminal 
 cd ~/drawing_arm_ws/src/cv/src
@@ -84,15 +87,14 @@ cd ~/drawing_arm_ws/src/cv/src
 # Run the drawing Python script
 python3 drawing_input.py  #draw, save with s and quit with q
 ```
-### 3.Execute Trajectory
+### 3. Execute Trajectory
 ```bash
 # In another terminal
 source ~/drawing_arm_ws/install/setup.bash
 
-# Run MoveIt commander moveit cpp api node
+# Run MoveIt2 commander moveit cpp api node
 ros2 run commander commander   #Followed trajectory will be visualised in Rviz
 ```
 
 
-usage
-sys arch
+
