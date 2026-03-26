@@ -94,8 +94,5 @@ ros2 run commander commander   #Followed trajectory will be visualised in Rviz
 ```
 
 
-
-write detailed struct
-install
 usage
 sys arch
