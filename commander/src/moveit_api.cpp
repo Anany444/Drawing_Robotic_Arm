@@ -138,7 +138,7 @@ private:
 
     void initMarker()
     {
-        marker_.header.frame_id = "world";  // change to "world" if needed
+        marker_.header.frame_id = "world";  // 
         marker_.ns = "drawing";
         marker_.id = 0;
         marker_.type = visualization_msgs::msg::Marker::LINE_STRIP;
