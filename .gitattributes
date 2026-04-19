@@ -1,0 +1,3 @@
+# Ignore third-party ROS 2 drivers in GitHub language statistics
+annin_ar4_description/** linguist-vendored
+moveit_setup/** linguist-vendored
