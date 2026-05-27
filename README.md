@@ -1,5 +1,5 @@
 # Drawing_Robotic_Arm
-An AR4 based Robotic Arm in Gazebo simulation which takes user drawn input image and generate a trajectory using MoveIt2 C++ API which is followed by the end effector tool and visualised in Rviz.
+An AR4 Robotic Arm in Gazebo simulation which takes user drawn input image and generate a trajectory using MoveIt2 C++ API which is followed by the end effector tool and visualised in Rviz.
 
 ## Video Demo
 https://github.com/user-attachments/assets/c285da72-82ae-4704-a958-bd43ca4de112
