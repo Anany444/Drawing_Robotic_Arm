@@ -39,7 +39,7 @@ class PolicyExecutor(Node):
         
         
         # Load policy from the extracted zip folder
-        self.declare_parameter('model_path', '/home/robot/vla_ws/src/lerobot_integration/trained_policy/ACT/v4/checkpoints/100000/pretrained_model')
+        self.declare_parameter('model_path', '/home/robot/vla_ws/src/lerobot_integration/trained_policy/ACT/v4')
         model_path = self.get_parameter('model_path').value
         
         self.get_logger().info(f"Loading ACT policy from {model_path}...")
@@ -106,8 +106,8 @@ class PolicyExecutor(Node):
         )
         
         self.marker_pub = self.create_publisher(
-            MarkerArray,
-            '/drawing_markers',
+            Marker,
+            'draw',
             10
         )
 
@@ -144,7 +144,8 @@ class PolicyExecutor(Node):
         
         # Precompute the goal marker (Blue line on the canvas)
         self.goal_marker = Marker()
-        self.goal_marker.header.frame_id = 'base_link'
+        self.goal_marker.header.frame_id = 'world'
+        self.goal_marker.ns = 'goal_shape'
         self.goal_marker.type = Marker.LINE_STRIP
         self.goal_marker.action = Marker.ADD
         self.goal_marker.id = 0
@@ -234,23 +235,22 @@ class PolicyExecutor(Node):
 
     def publish_markers(self):
         """Publish RViz markers for the goal shape and the drawn progress."""
-        ma = MarkerArray()
-        
         # Publish static goal
         self.goal_marker.header.stamp = self.get_clock().now().to_msg()
-        ma.markers.append(self.goal_marker)
+        self.marker_pub.publish(self.goal_marker)
         
-        # Publish dynamic progress trail
+        # Publish dynamic progress trail (matching commander style)
         prog_marker = Marker()
-        prog_marker.header.frame_id = 'base_link'
+        prog_marker.header.frame_id = 'world'
+        prog_marker.ns = 'drawing'
         prog_marker.header.stamp = self.get_clock().now().to_msg()
         prog_marker.type = Marker.LINE_STRIP
         prog_marker.action = Marker.ADD
-        prog_marker.id = 1
+        prog_marker.id = 0
         prog_marker.scale.x = 0.005 # 5mm line
         prog_marker.color.a = 1.0
-        prog_marker.color.r = 0.0
-        prog_marker.color.g = 1.0 # Green trail
+        prog_marker.color.r = 1.0 # Red trail like commander
+        prog_marker.color.g = 0.0
         prog_marker.color.b = 0.0
         
         for x, y, z in self.progress_points_3d:
@@ -258,8 +258,7 @@ class PolicyExecutor(Node):
             p.x, p.y, p.z = x, y, z
             prog_marker.points.append(p)
             
-        ma.markers.append(prog_marker)
-        self.marker_pub.publish(ma)
+        self.marker_pub.publish(prog_marker)
 
     def control_step(self):
         if self.ik_pending:
