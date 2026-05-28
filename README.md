@@ -1,24 +1,30 @@
-# Drawing_Robotic_Arm
+# 🤖 Drawing_Robotic_Arm
 
 An AR4 Robotic Arm in a Gazebo simulation. This project allows you to generate and execute drawing trajectories in two different ways:
 1. **Classical Planning:** Takes a user-drawn input image and generates a trajectory using MoveIt2.
 2. **ACT Policy:** Uses an Action Chunking with Transformers (ACT) model trained on synthetic, procedurally generated trajectory data to generate and draw shapes autonomously.
 
 
-## Features
-- **OpenCV Input:** A simple drawing tool that captures mouse strokes and converts them into Cartesian coordinates.
-- **MoveIt2 Integration:** C++ node for standard trajectory planning and execution.
-- **AI Policy Integration:** Uses Hugging Face's LeRobot library to run an ACT policy with temporal ensembling for smooth control.
-- **Simulation:** Full Gazebo physics simulation and RViz visualization.
+## ✨ Features
+- 🖼️ **OpenCV Input:** A simple drawing tool that captures mouse strokes and converts them into Cartesian coordinates.
+- 🛣️ **MoveIt2 Integration:** C++ node for standard trajectory planning and execution.
+- 🧠 **AI Policy Integration:** Uses Hugging Face's LeRobot library to run an ACT policy with temporal ensembling for smooth control.
+- 🖥️ **Simulation:** Full Gazebo physics simulation and RViz visualization.
 
 
-## Video Demo
+## 🎥 Video Demo
+### 1. Classical trajectory execution
+
 https://github.com/user-attachments/assets/c285da72-82ae-4704-a958-bd43ca4de112
+
+### 2. ACT policy trajectory execution
+[ACT_policy_drawing_clipped.webm](https://github.com/user-attachments/assets/74c23ac0-add5-4d47-951c-0a71d5ee82d5)
+
 
 
 ## 📊 ACT Policy Results
 
-Here is a comparison of the randomly generated target shape (on the left in each image) versus the ACT Policy's executed trajectory (On the right in each image).
+Here is a comparison of the randomly generated target shape (on the left in each image) versus the ACT Policy's executed trajectory (on the right in each image).
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e706d3e7-8324-461a-89d7-afac4d9cbc14" width="32%" alt="Result 1" />
@@ -31,57 +37,57 @@ Here is a comparison of the randomly generated target shape (on the left in each
 </p>
 
 
-## System Architecture
+## 🏗️ System Architecture
 
 
 The project features a modular pipeline that handles both classical and policy-based execution:
 
 
-### 1. Input Generation
+### 1️⃣ Input Generation
 - **User Input (Classical):** A Python OpenCV script captures 2D mouse strokes. Coordinates are normalized and stored as (x, y, z) waypoints in `coords.txt`.
 - **Procedural Generation (Policy):** A procedural generation function creates random closed shapes and outputs them as a visual target (canvas image) for the model.
 
-### 2. Planning and Policy Execution
+### 2️⃣ Planning and Policy Execution
 - **MoveIt 2 (Classical):** A C++ node reads the `coords.txt` waypoints and generates a Cartesian trajectory using the MoveIt2 C++ planning interface.
 - **ACT Policy:** An ACT (Action Chunking with Transformers) policy takes three inputs: a target goal image, a live progress image, and an 8-dimensional robot state vector (joints + end-effector position). It outputs a sequence of absolute Cartesian (X, Y, Z) coordinates. Temporal ensembling averages these overlapping action chunks at 30Hz, and the resulting target is converted to joint angles via MoveIt Inverse Kinematics service for smooth, continuous movement.
 
-### 3. Control & Simulation
+### 3️⃣ Control & Simulation
 - Trajectories from both modes are executed via `ros2_control` joint trajectory controllers.
 - The `gz_ros2_control` plugin interfaces the controllers with the Gazebo-simulated AR4 robot.
 
-### 4. Visualization (RViz)
+### 4️⃣ Visualization (RViz)
 - RViz visualizes the drawing using markers for end effector trajectory at the drawing plane height.
 
 
 
-## Repository Structure
+## 📁 Repository Structure
 
 ```text
 src/
+├── annin_ar4_description/    # URDF/Xacro + meshes
+│   ├── urdf/
+│   ├── meshes/
+│   └── config/
 ├── bringup/                  # Launch files and runtime configs
 │   ├── launch/
 │   └── config/
 ├── commander/                # C++ MoveIt2 API node
 │   └── src/
-└── lerobot_integration/     # Policy execution, data collection and data conversion nodes
-|   ├── lerobot_integration/
-|   └── trained_policy/
 ├── cv/                       # OpenCV drawing input tool
 │   └── src/
 ├── description/              # Gazebo world assets
 │   └── worlds/
-├── annin_ar4_description/    # URDF/Xacro + meshes
-│   ├── urdf/
-│   ├── meshes/
-│   └── config/
+├── lerobot_integration/      # Policy execution, data collection and data conversion nodes
+│   ├── lerobot_integration/
+│   └── trained_policy/
 └── moveit_setup/             # MoveIt2 configuration
     ├── launch/
     └── config/
 ```
 
-## Installation
+## ⚙️ Installation
 
-### 1. Setup Workspace and ROS Dependencies
+### 1️⃣ Setup Workspace and ROS Dependencies
 ```bash
 # Create workspace
 mkdir -p ~/drawing_arm_ws/src
@@ -102,7 +108,7 @@ colcon build
 source install/setup.bash
 ```
 
-### 2. Python Dependencies
+### 2️⃣ Python Dependencies
 ```bash
 pip install opencv-python numpy torch huggingface_hub
 ```
@@ -114,21 +120,22 @@ git clone https://github.com/huggingface/lerobot.git
 cd lerobot
 pip install -e .
 ```
-### 3. Dataset and Model Weights
-Refer to policy.md file in lerobot_integration/trained_policy folder
+### 3️⃣ Dataset and Model Weights
+For instructions on how to download and extract the trained policy weights, please refer to [lerobot_integration/trained_policy/policy.md](lerobot_integration/trained_policy/policy.md).
 
 
-## Usage
-### Step 1: Launch the Simulation
+## 🚀 Usage
+
+###  Step 1: Launch the Simulation
 Always start by launching Gazebo, MoveGroup, and the controllers:
 ```bash
 cd ~/drawing_arm_ws
 source ~/drawing_arm_ws/install/setup.bash
 ros2 launch bringup final.launch.py
 ```
-### Step 2: Choose Execution Mode
+###  Step 2: Choose Execution Mode
 
-#### Option A: User Input (MoveIt2 C++ API)
+####  Option A: User Input (MoveIt2 C++ API)
 Draw a shape manually and have the C++ node generate the trajectory.
 
 1. **Open the Drawing Tool (New Terminal):**
@@ -144,7 +151,7 @@ Draw a shape manually and have the C++ node generate the trajectory.
    ros2 run commander commander
    ```
 
-#### Option B: ACT Policy
+####  Option B: ACT Policy
 Have the trained model randomly generate and draw a shape on its own.
 
 1. **Run the Policy Executor (New Terminal):**
@@ -153,6 +160,5 @@ Have the trained model randomly generate and draw a shape on its own.
    ros2 run lerobot_integration policy_executor
    ```
    *This will generate a random shape, show the target line in RViz, and run the ACT policy to draw it.*
-```
 
 
