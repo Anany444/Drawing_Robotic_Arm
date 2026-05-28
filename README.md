@@ -15,6 +15,22 @@ An AR4 Robotic Arm in a Gazebo simulation. This project allows you to generate a
 ## Video Demo
 https://github.com/user-attachments/assets/c285da72-82ae-4704-a958-bd43ca4de112
 
+
+## 📊 ACT Policy Results
+
+Here is a comparison of the randomly generated target shape (on the left in each image) versus the ACT Policy's executed trajectory (On the right in each image).
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e706d3e7-8324-461a-89d7-afac4d9cbc14" width="32%" alt="Result 1" />
+  <img src="https://github.com/user-attachments/assets/a3dd4887-b422-4d0e-8d6e-90dd87ef7162" width="32%" alt="Result 2" />
+  <img src="https://github.com/user-attachments/assets/1b031279-cf33-4730-af73-1cdccb3ae15d" width="32%" alt="Result 3" />
+  <br>
+  <img src="https://github.com/user-attachments/assets/2177f963-cee0-4d5c-89f9-03d3007faa14" width="32%" alt="Result 4" />
+  <img src="https://github.com/user-attachments/assets/9c8b7402-6f5c-46cd-a9dc-81250757cbb4" width="32%" alt="Result 5" />
+  <img src="https://github.com/user-attachments/assets/ed384339-ba6a-403e-8d6e-702aefed16f3" width="32%" alt="Result 6" />
+</p>
+
+
 ## System Architecture
 
 
