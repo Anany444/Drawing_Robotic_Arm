@@ -159,6 +159,6 @@ Have the trained model randomly generate and draw a shape on its own.
    source ~/drawing_arm_ws/install/setup.bash
    ros2 run lerobot_integration policy_executor
    ```
-   *This will generate a random shape, show the target line in RViz, and run the ACT policy to draw it.*
+   This will generate a random shape, show the target line in RViz, and run the ACT policy to draw it.
 
 
